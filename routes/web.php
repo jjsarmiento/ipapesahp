@@ -23,6 +23,8 @@ $app->get('/', function () use ($app)
 */
 
 // EMPLOYEE ROUTES -- START
+
+$app->group(['middleware' => 'auth'], function () use ($app) {
 	// Get employee list
 	$app->get("/employees", "MasterController@SelectEmployeeList");
 
@@ -38,8 +40,10 @@ $app->get('/', function () use ($app)
 	$app->post('/employeeUpdate','MasterController@UpdateEmployeeDetails');
 
 	// Delete specific employee from database
-	$app->delete('/employee={employee_id}','MasterController@DeleteEmployee');
+	$app->delete('/employees','MasterController@DeleteEmployee');
+	// Delete specific employee from database (Alternative route when used by Web app)
 	$app->post('/employeeDelete','MasterController@DeleteEmployee');
+});
 
 // EMPLOYEE ROUTES -- END
 //php -S localhost:8080 -t .public/
